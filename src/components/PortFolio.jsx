@@ -25,8 +25,8 @@ function PortFolio() {
       id: 3,
       logo: logo,
       name: "Portfolio Website",
-      Link: "https://youtube.com/reactjs-project-video",
-      codeLink: "https://github.com/username/reactjs-project",
+      Link: "https://portfoliofront-iota.vercel.app/",
+      codeLink: "https://github.com/sonupratap244/portfoliofront",
     },
     {
       id: 4,
