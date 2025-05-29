@@ -39,7 +39,7 @@ function PortFolio() {
       id: 5,
       logo: gredient,
       name: "Gradient background Images",
-      Link: "https://github.com/sonupratap244/Gradient-Background-Images",
+      Link: "https://statuesque-banoffee-b66f42.netlify.app/",
       codeLink: "https://github.com/sonupratap244/Gradient-Background-Images",
     },
    
