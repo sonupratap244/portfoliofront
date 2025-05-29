@@ -18,7 +18,7 @@ function Contact() {
       message: data.message,
     };
     try {
-      await axios.post("http://localhost:8000/api/create", userInfo);
+      await axios.post("https://portfoliobackend-w4rb.onrender.com", userInfo);
       toast.success("Your message has been sent");
     } catch (error) {
       toast.error("Something went wrong");
