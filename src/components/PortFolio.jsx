@@ -25,7 +25,7 @@ function PortFolio() {
       id: 3,
       logo: logo,
       name: "Portfolio Website",
-      Link: "https://portfoliofront-iota.vercel.app/",
+      Link: "https://portfoliofront-sooty.vercel.app/",
       codeLink: "https://github.com/sonupratap244/portfoliofront",
     },
     {
