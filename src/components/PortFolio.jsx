@@ -11,7 +11,7 @@ function PortFolio() {
       id: 1,
       logo: elearn,
       name: "E-Learning Platform",
-      Link: "https://stydyzone.vercel.app/",
+      Link: "http://studyzone-bice.vercel.app",
       codeLink: "https://github.com/sonupratap244?tab=repositories",
     },
     {
