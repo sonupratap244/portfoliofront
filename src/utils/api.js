@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // Change if deployed
+  baseURL: "https://portfolioback-manjeet.onrender.com/api", // Change if deployed
 });
 
 API.interceptors.request.use((req) => {
