@@ -7,7 +7,7 @@ import API from "../utils/api";
 
 function Contact() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const [loading, setLoading] = useState(false); // Loading state for button
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
     const userInfo = {
@@ -19,16 +19,18 @@ function Contact() {
     };
 
     setLoading(true);  // Show "Sending..."
-    reset();           // Clear form immediately
 
     try {
       const response = await API.post("/messages/create", userInfo);
 
-      if (response.status >= 200 && response.status < 300) {
+      if (response && response.status >= 200 && response.status < 300) {
+        // Reset form only after successful submission
+        reset();
+
         // Confetti animation
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
-        // Custom toast
+        // Success toast
         toast.custom((t) => (
           <div className={`${t.visible ? "animate-enter" : "animate-leave"} max-w-md w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5`}>
             <div className="flex-1 w-0 p-4">
@@ -53,12 +55,14 @@ function Contact() {
             </div>
           </div>
         ));
+      } else {
+        toast.error(response?.data?.message || "Something went wrong. Please try again.");
       }
     } catch (error) {
       console.error(error.response || error.message);
       toast.error(error.response?.data?.message || "Something went wrong. Please try again.");
     } finally {
-      setLoading(false); // Reset button back to normal
+      setLoading(false); // Reset button
     }
   };
 
