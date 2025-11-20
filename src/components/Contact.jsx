@@ -32,8 +32,12 @@ function Contact() {
     };
 
     try {
-      // Backend API
-      await axios.post("http://localhost:5000/api/messages/create", userInfo);
+      // Final backend API — choose whichever you prefer:
+      // Local:
+      // await axios.post("http://localhost:5000/api/messages/create", userInfo);
+
+      // Remote:
+      await axios.post("https://portfoliobackend-w4rb.onrender.com/api/create", userInfo);
 
       // Confetti animation 
       confetti({
@@ -52,10 +56,9 @@ function Contact() {
           <div className="flex-1 w-0 p-4">
             <div className="flex items-start">
               <div className="flex-shrink-0 pt-0.5">
-              
                 <span className="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full text-white text-2xl shadow-lg animate-bounce">
-  <FaCheck />
-</span>
+                  <FaCheck />
+                </span>
               </div>
               <div className="ml-3 flex-1">
                 <p className="text-lg font-bold">Message Sent Successfully!</p>
@@ -76,7 +79,7 @@ function Contact() {
         </div>
       ));
 
-      reset(); // clear form after submit
+      reset();
     } catch (error) {
       toast.error("Something went wrong. Please try again later.");
     }
@@ -216,7 +219,7 @@ function Contact() {
             type="submit"
             className="flex items-center gap-2 bg-purple-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-purple-700 transition duration-300"
           >
-             Send Message
+            Send Message
           </button>
         </form>
       </div>
