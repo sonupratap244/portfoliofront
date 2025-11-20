@@ -67,7 +67,7 @@ function Contact() {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto px-6 md:px-16 my-16 bg-gray-50 rounded-xl shadow-lg py-12">
+    <div id="Contact" className="max-w-screen-xl mx-auto px-6 md:px-16 my-16 bg-gray-50 rounded-xl shadow-lg py-12">
       <Toaster />
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-800">Contact Me</h1>
