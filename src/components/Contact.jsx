@@ -1,18 +1,8 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
 import confetti from "canvas-confetti";
-import { FaCheck } from "react-icons/fa";
-
-import {
-  FaEnvelope,
-  FaPhoneAlt,
-  FaMapMarkerAlt,
-  FaUser,
-  FaPaperPlane,
-  FaCalendarAlt,
-} from "react-icons/fa";
+import { FaCheck, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaUser, FaCalendarAlt } from "react-icons/fa";
+import API from "../utils/api";
 
 function Contact() {
   const {
@@ -31,58 +21,63 @@ function Contact() {
       meetingTime: data.meetingTime || "",
     };
 
-    try {
-      // Final backend API — choose whichever you prefer:
-      // Local:
-      // await axios.post("http://localhost:5000/api/messages/create", userInfo);
+   try {
+  // Send POST request using API instance
+  const response = await API.post("/messages/create", userInfo);
 
-      // Remote:
-      await axios.post("https://portfoliobackend-w4rb.onrender.com/api/create", userInfo);
+  // Check for any 2xx status (200–299)
+  if (response.status >= 200 && response.status < 300) {
+    // Confetti animation
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
 
-      // Confetti animation 
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-
-      // VIP toast
-      toast.custom((t) => (
-        <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-md w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-        >
-          <div className="flex-1 w-0 p-4">
-            <div className="flex items-start">
-              <div className="flex-shrink-0 pt-0.5">
-                <span className="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full text-white text-2xl shadow-lg animate-bounce">
-                  <FaCheck />
-                </span>
-              </div>
-              <div className="ml-3 flex-1">
-                <p className="text-lg font-bold">Message Sent Successfully!</p>
-                <p className="mt-1 text-sm text-purple-100">
-                  Thank you for reaching out. We’ll contact you very soon 
-                </p>
-              </div>
+    // Custom toast
+    toast.custom((t) => (
+      <div
+        className={`${
+          t.visible ? "animate-enter" : "animate-leave"
+        } max-w-md w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg rounded-2xl pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      >
+        <div className="flex-1 w-0 p-4">
+          <div className="flex items-start">
+            <div className="flex-shrink-0 pt-0.5">
+              <span className="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full text-white text-2xl shadow-lg animate-bounce">
+                <FaCheck />
+              </span>
+            </div>
+            <div className="ml-3 flex-1">
+              <p className="text-lg font-bold">Message Sent Successfully!</p>
+              <p className="mt-1 text-sm text-purple-100">
+                Thank you for reaching out. We’ll contact you very soon.
+              </p>
             </div>
           </div>
-          <div className="flex border-l border-purple-500">
-            <button
-              onClick={() => toast.dismiss(t.id)}
-              className="w-full rounded-none rounded-r-2xl p-4 flex items-center justify-center text-sm font-medium hover:bg-purple-700 focus:outline-none"
-            >
-              Close
-            </button>
-          </div>
         </div>
-      ));
+        <div className="flex border-l border-purple-500">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="w-full rounded-none rounded-r-2xl p-4 flex items-center justify-center text-sm font-medium hover:bg-purple-700 focus:outline-none"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    ));
 
-      reset();
-    } catch (error) {
-      toast.error("Something went wrong. Please try again later.");
-    }
+    reset();
+  } else {
+    // Backend may return 4xx or 5xx with message key
+    toast.error(response.data?.message || "Something went wrong. Please try again.");
+  }
+} catch (error) {
+  console.error(error.response || error.message);
+  // Axios error response uses "message" key in backend
+  toast.error(error.response?.data?.message || "Something went wrong. Please try again.");
+}
+
   };
 
   return (
